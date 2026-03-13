@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ER Diagram (Chen Notation) – Personal Budget &amp; Finance Manager</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #1f2937;
+    }
+    .wrap {
+      max-width: 1400px;
+      margin: 24px auto;
+      padding: 0 16px;
+    }
+    h1 {
+      margin: 0 0 4px;
+      font-size: 24px;
+    }
+    .subtitle {
+      margin: 0 0 14px;
+      font-size: 14px;
+      color: #64748b;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid #dbe3ef;
+      border-radius: 12px;
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
+      padding: 12px;
+      overflow-x: auto;
+    }
+    svg {
+      display: block;
+      min-width: 1100px;
+      width: 100%;
+    }
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-top: 16px;
+      padding: 12px 16px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Entity-Relationship Diagram (Chen Notation)</h1>
+    <p class="subtitle">Personal Budget &amp; Finance Manager – Database Schema · 7 Entities · 6 Relationships</p>
+    <div class="card">
+      <svg id="er-svg" viewBox="0 0 6000 4100" xmlns="http://www.w3.org/2000/svg">
+        <title>ER Diagram in Chen Notation for Personal Budget and Finance Manager</title>
+        <desc>
+          Chen notation ER diagram showing 7 entities: USERS, INCOME, BUDGET_CATEGORIES,
+          EXPENSES, PASSWORD_RESET_TOKENS, SAVINGS_GOALS, TAX_RECORDS, their attributes,
+          and their 1-to-N relationships.
+        </desc>
+      </svg>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item">
+        <svg width="44" height="26" xmlns="http://www.w3.org/2000/svg">
+          <rect x="1" y="1" width="42" height="24" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2.5"/>
+        </svg>
+        <span>Entity</span>
+      </div>
+      <div class="legend-item">
+        <svg width="44" height="30" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="22,2 42,15 22,28 2,15" fill="#fef3c7" stroke="#d97706" stroke-width="2.5"/>
+        </svg>
+        <span>Relationship</span>
+      </div>
+      <div class="legend-item">
+        <svg width="62" height="28" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="31" cy="14" rx="29" ry="12" fill="#f0fdf4" stroke="#16a34a" stroke-width="2.5"/>
+        </svg>
+        <span>Attribute</span>
+      </div>
+      <div class="legend-item">
+        <svg width="62" height="28" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="31" cy="14" rx="29" ry="12" fill="#f0fdf4" stroke="#16a34a" stroke-width="2.5" stroke-dasharray="7 4"/>
+        </svg>
+        <span>Derived Attribute</span>
+      </div>
+      <div class="legend-item">
+        <svg width="34" height="24" xmlns="http://www.w3.org/2000/svg">
+          <text x="17" y="18" text-anchor="middle" font-size="17" font-weight="bold"
+                text-decoration="underline" fill="#14532d" font-family="Arial,sans-serif">pk</text>
+        </svg>
+        <span>Primary Key (underlined)</span>
+      </div>
+      <div class="legend-item">
+        <span style="font-size:20px;font-weight:bold;color:#dc2626;margin-right:4px">1</span>
+        <span style="font-size:20px;font-weight:bold;color:#dc2626">N</span>
+        <span>&nbsp;Cardinality</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      const NS  = 'http://www.w3.org/2000/svg';
+      const svg = document.getElementById('er-svg');
+
+      /* ── helpers ─────────────────────────────────────────────────────── */
+
+      function mk(tag, attrs) {
+        const e = document.createElementNS(NS, tag);
+        for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, String(v));
+        return e;
+      }
+
+      function add(e) { svg.appendChild(e); return e; }
+
+      function line(x1, y1, x2, y2) {
+        add(mk('line', { x1, y1, x2, y2, stroke: '#94a3b8', 'stroke-width': 3 }));
+      }
+
+      /* ── entity rectangle ────────────────────────────────────────────── */
+      function entity(cx, cy, label, w) {
+        w = w || 230;
+        const h = 58;
+        add(mk('rect', {
+          x: cx - w / 2, y: cy - h / 2, width: w, height: h,
+          fill: '#dbeafe', stroke: '#1d4ed8', 'stroke-width': 3, rx: 2
+        }));
+        if (Array.isArray(label)) {
+          // Two-line label
+          const grp = mk('text', {
+            x: cx, y: cy - 12,
+            'text-anchor': 'middle',
+            'font-size': 20, 'font-weight': 'bold', fill: '#1e3a8a',
+            'font-family': 'Arial, sans-serif'
+          });
+          label.forEach((ln, i) => {
+            const ts = document.createElementNS(NS, 'tspan');
+            ts.setAttribute('x', cx);
+            ts.setAttribute('dy', i === 0 ? 0 : 24);
+            ts.textContent = ln;
+            grp.appendChild(ts);
+          });
+          add(grp);
+        } else {
+          add(mk('text', {
+            x: cx, y: cy,
+            'text-anchor': 'middle', 'dominant-baseline': 'middle',
+            'font-size': 21, 'font-weight': 'bold', fill: '#1e3a8a',
+            'font-family': 'Arial, sans-serif'
+          })).textContent = label;
+        }
+      }
+
+      /* ── relationship diamond ────────────────────────────────────────── */
+      function diamond(cx, cy, label) {
+        const dx = 100, dy = 48;
+        add(mk('polygon', {
+          points: `${cx},${cy - dy} ${cx + dx},${cy} ${cx},${cy + dy} ${cx - dx},${cy}`,
+          fill: '#fef3c7', stroke: '#d97706', 'stroke-width': 3
+        }));
+        add(mk('text', {
+          x: cx, y: cy,
+          'text-anchor': 'middle', 'dominant-baseline': 'middle',
+          'font-size': 19, 'font-weight': 'bold', fill: '#92400e',
+          'font-family': 'Arial, sans-serif'
+        })).textContent = label;
+      }
+
+      /* ── attribute ellipse ──────────────────────────────────────────── */
+      function attr(cx, cy, label, isPK, isDerived) {
+        const baseAttrs = {
+          cx, cy, rx: 92, ry: 27,
+          fill: '#f0fdf4', stroke: '#16a34a', 'stroke-width': 2.5
+        };
+        if (isDerived) baseAttrs['stroke-dasharray'] = '8 4';
+        add(mk('ellipse', baseAttrs));
+        const t = add(mk('text', {
+          x: cx, y: cy,
+          'text-anchor': 'middle', 'dominant-baseline': 'middle',
+          'font-size': 17, fill: '#14532d',
+          'font-family': 'Arial, sans-serif',
+          ...(isPK ? { 'font-weight': 'bold', 'text-decoration': 'underline' } : {})
+        }));
+        t.textContent = label;
+      }
+
+      /* ── cardinality label ──────────────────────────────────────────── */
+      function cardLabel(fromX, fromY, toX, toY, lbl, offset) {
+        offset = offset || 95;
+        const dx = toX - fromX, dy = toY - fromY;
+        const len = Math.sqrt(dx * dx + dy * dy);
+        add(mk('text', {
+          x: fromX + (dx / len) * offset,
+          y: fromY + (dy / len) * offset,
+          'text-anchor': 'middle', 'dominant-baseline': 'middle',
+          'font-size': 30, 'font-weight': 'bold', fill: '#dc2626',
+          'font-family': 'Arial, sans-serif'
+        })).textContent = lbl;
+      }
+
+      /* ── connect entity to relationship diamond with cardinality ─────── */
+      function connect(ex, ey, rx2, ry2, cardNearEntity) {
+        line(ex, ey, rx2, ry2);
+        if (cardNearEntity) cardLabel(ex, ey, rx2, ry2, cardNearEntity);
+      }
+
+      /* ── attribute connector lines ───────────────────────────────────── */
+      function attrLines(ecx, ecy, list) {
+        list.forEach(([ax, ay]) => line(ecx, ecy, ax, ay));
+      }
+
+      /* ═══════════════════════════════════════════════════════════════════
+         POSITIONS
+         ═══════════════════════════════════════════════════════════════════ */
+
+      // Entity centres
+      const USERS   = [3000, 1960];
+      const INCOME  = [750,   580];
+      const BUDGET  = [700,  1960];
+      const EXPENSE = [750,  3340];
+      const PWD     = [5250,  580];
+      const SAVINGS = [5300, 1960];
+      const TAX     = [5250, 3340];
+
+      // Relationship diamond centres
+      const R_REC  = [1870, 1270];   // RECORDS
+      const R_ALL  = [1700, 1960];   // ALLOCATES
+      const R_TRK  = [1870, 2650];   // TRACKS
+      const R_REQ  = [4130, 1270];   // REQUESTS
+      const R_SET  = [4300, 1960];   // SETS
+      const R_HAS  = [4130, 2650];   // HAS
+
+      /* ═══════════════════════════════════════════════════════════════════
+         ATTRIBUTE DEFINITIONS  [cx, cy, label, isPK, isDerived]
+         ═══════════════════════════════════════════════════════════════════ */
+
+      const A_USERS = [
+        [2670, 1670, 'user_id',               true,  false],
+        [3000, 1600, 'full_name',              false, false],
+        [3330, 1670, 'email',                  false, false],
+        [2540, 1820, 'password_hash',          false, false],
+        [3460, 1820, 'remember_token',         false, false],
+        [2540, 2120, 'email_verified',         false, false],
+        [3460, 2120, 'failed_login_attempts',  false, false],
+        [2650, 2310, 'account_locked_until',   false, false],
+        [3000, 2380, 'created_at',             false, false],
+        [3350, 2310, 'last_login',             false, false],
+      ];
+
+      const A_INCOME = [
+        [420,  360, 'income_id',   true,  false],
+        [750,  295, 'user_id',     false, false],
+        [1090, 360, 'month',       false, false],
+        [345,  520, 'basic_salary',false, false],
+        [355,  665, 'allowances',  false, false],
+        [1115, 520, 'bonuses',     false, false],
+        [1105, 665, 'other_income',false, false],
+        [560,  820, 'total_income',false, true ],   // derived
+        [940,  820, 'created_at',  false, false],
+      ];
+
+      const A_BUDGET = [
+        [380,  1730, 'category_id',     true,  false],
+        [315,  1870, 'user_id',         false, false],
+        [300,  2015, 'month',           false, false],
+        [375,  2170, 'category_name',   false, false],
+        [720,  2210, 'allocated_amount',false, false],
+        [1005, 2110, 'created_at',      false, false],
+      ];
+
+      const A_EXPENSE = [
+        [420,  3100, 'expense_id',   true,  false],
+        [750,  3035, 'user_id',      false, false],
+        [1090, 3100, 'category_name',false, false],
+        [345,  3280, 'amount',       false, false],
+        [335,  3430, 'expense_date', false, false],
+        [600,  3560, 'description',  false, false],
+        [940,  3555, 'created_at',   false, false],
+      ];
+
+      const A_PWD = [
+        [4920, 360, 'token_id',  true,  false],
+        [5250, 295, 'user_id',   false, false],
+        [5575, 360, 'token',     false, false],
+        [4875, 535, 'expires_at',false, false],
+        [5625, 535, 'used',      false, false],
+        [5250, 840, 'created_at',false, false],
+      ];
+
+      const A_SAVINGS = [
+        [5635, 1740, 'goal_id',       true,  false],
+        [5710, 1870, 'user_id',       false, false],
+        [5710, 2020, 'goal_name',     false, false],
+        [5650, 2185, 'target_amount', false, false],
+        [5285, 2280, 'current_amount',false, false],
+        [4900, 2185, 'target_date',   false, false],
+        [4870, 2020, 'status',        false, false],
+        [4905, 1870, 'created_at',    false, false],
+      ];
+
+      const A_TAX = [
+        [4915, 3100, 'tax_id',          true,  false],
+        [5250, 3035, 'user_id',         false, false],
+        [5585, 3100, 'month',           false, false],
+        [4845, 3285, 'taxable_income',  false, false],
+        [5660, 3285, 'income_tax',      false, false],
+        [4865, 3515, 'ssf_contribution',false, false],
+        [5250, 3580, 'total_tax',       false, false],
+        [5640, 3515, 'created_at',      false, false],
+      ];
+
+      /* ═══════════════════════════════════════════════════════════════════
+         RENDER  (bottom to top: lines → entities → diamonds → attributes)
+         ═══════════════════════════════════════════════════════════════════ */
+
+      // 1 ── entity ↔ relationship connection lines + cardinality
+      connect(...INCOME,  ...R_REC,  'N');   connect(...USERS,   ...R_REC,  '1');
+      connect(...BUDGET,  ...R_ALL,  'N');   connect(...USERS,   ...R_ALL,  '1');
+      connect(...EXPENSE, ...R_TRK,  'N');   connect(...USERS,   ...R_TRK,  '1');
+      connect(...USERS,   ...R_REQ,  '1');   connect(...PWD,     ...R_REQ,  'N');
+      connect(...USERS,   ...R_SET,  '1');   connect(...SAVINGS, ...R_SET,  'N');
+      connect(...USERS,   ...R_HAS,  '1');   connect(...TAX,     ...R_HAS,  'N');
+
+      // 2 ── attribute connector lines
+      attrLines(...USERS,   A_USERS);
+      attrLines(...INCOME,  A_INCOME);
+      attrLines(...BUDGET,  A_BUDGET);
+      attrLines(...EXPENSE, A_EXPENSE);
+      attrLines(...PWD,     A_PWD);
+      attrLines(...SAVINGS, A_SAVINGS);
+      attrLines(...TAX,     A_TAX);
+
+      // 3 ── entity rectangles
+      entity(...USERS,   'USERS',                 200);
+      entity(...INCOME,  'INCOME',                200);
+      entity(...BUDGET,  'BUDGET_CATEGORIES',     310);
+      entity(...EXPENSE, 'EXPENSES',              210);
+      entity(...PWD,     ['PASSWORD_RESET', 'TOKENS'], 330);
+      entity(...SAVINGS, 'SAVINGS_GOALS',         260);
+      entity(...TAX,     'TAX_RECORDS',           250);
+
+      // 4 ── relationship diamonds
+      diamond(...R_REC, 'RECORDS');
+      diamond(...R_ALL, 'ALLOCATES');
+      diamond(...R_TRK, 'TRACKS');
+      diamond(...R_REQ, 'REQUESTS');
+      diamond(...R_SET, 'SETS');
+      diamond(...R_HAS, 'HAS');
+
+      // 5 ── attribute ellipses (top layer)
+      [
+        ...A_USERS, ...A_INCOME, ...A_BUDGET, ...A_EXPENSE,
+        ...A_PWD,   ...A_SAVINGS, ...A_TAX
+      ].forEach(([cx, cy, lbl, isPK, isDer]) => attr(cx, cy, lbl, isPK, isDer));
+
+    })();
+  </script>
+</body>
+</html>
