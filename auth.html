@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Sign Up - Budget Manager</title>
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>Personal Budget Manager</h1>
+                <p>Manage your finances, Manage your living Style.</p>
+            </div>
+            
+            <div class="auth-toggle">
+                <button class="toggle-btn active" id="login-toggle">Login</button>
+                <button class="toggle-btn" id="signup-toggle">Sign Up</button>
+            </div>
+            
+            <form id="login-form" class="auth-form active">
+                <h2>Welcome Back!</h2>
+                
+                <div class="alert" id="login-alert"></div>
+                
+                <div class="form-group">
+                    <label for="login-email">Email Address</label>
+                    <input type="email" id="login-email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                
+                <div class="form-group checkbox-group">
+                    <label>
+                        <input type="checkbox" id="remember-me">
+                        <span>Remember me for 30 days</span>
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn-submit" id="login-btn">
+                    <span id="login-btn-text">Login</span>
+                    <span class="loader" id="login-btn-loader" style="display: none;"></span>
+                </button>
+            </form>
+            
+            <form id="signup-form" class="auth-form">
+                <h2>Create Account</h2>
+                
+                <div class="alert" id="signup-alert"></div>
+                
+                <div class="form-group">
+                    <label for="signup-fullname">Full Name</label>
+                    <div class="input-with-icon">
+                        <input type="text" id="signup-fullname" required>
+                        <span class="input-icon" id="fullname-icon"></span>
+                    </div>
+                    <div class="validation-message error" id="signup-fullname-error"></div>
+                    <div class="validation-message success" id="signup-fullname-success"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signup-email">Email Address</label>
+                    <div class="input-with-icon">
+                        <input type="email" id="signup-email" required>
+                        <span class="input-icon" id="email-icon"></span>
+                    </div>
+                    <div class="validation-message error" id="signup-email-error"></div>
+                    <div class="validation-message success" id="signup-email-success"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" required>
+                    <div class="validation-message error" id="signup-password-error"></div>
+                    <div class="password-strength">
+                        <div class="strength-bar">
+                            <div class="strength-fill" id="strength-fill"></div>
+                        </div>
+                        <span class="strength-text" id="strength-text">Password strength</span>
+                    </div>
+                    <ul class="password-requirements">
+                        <li id="req-length">At least 8 characters</li>
+                        <li id="req-uppercase">One uppercase letter</li>
+                        <li id="req-lowercase">One lowercase letter</li>
+                        <li id="req-number">One number</li>
+                        <li id="req-special">One special character (!@#$%^&*)</li>
+                    </ul>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signup-confirm-password">Confirm Password</label>
+                    <div class="input-with-icon">
+                        <input type="password" id="signup-confirm-password" required>
+                        <span class="input-icon" id="confirm-icon"></span>
+                    </div>
+                    <div class="validation-message error" id="signup-confirm-error"></div>
+                    <div class="validation-message success" id="signup-confirm-success"></div>
+                </div>
+                
+                <button type="submit" class="btn-submit" id="signup-btn" disabled>
+                    <span id="signup-btn-text">Create Account</span>
+                    <span class="loader" id="signup-btn-loader" style="display: none;"></span>
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <script src="auth.js"></script>
+</body>
+</html>
